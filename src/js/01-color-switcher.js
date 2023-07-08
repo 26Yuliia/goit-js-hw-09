@@ -1,27 +1,27 @@
-const refs = {
-  startBtn: document.querySelector('button[data-action="start"'),
-  stopBtn: document.querySelector('button[data-action="stop"'),
-};
-
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
     .toString(16)
     .padStart(6, 0)}`;
 }
-const INTERVAL_DELAY = 1000;
-let intervalId = null;
+const btnStart = document.querySelector('button[data-start]');
+const btnStop = document.querySelector('button[data-stop]');
+const bodyEl = document.querySelector('body');
+btnStop.disabled = true;
+let timerId = null;
 
-refs.btnStart.addEventListener('click', changeColor);
-refs.btnStop.addEventListener('click', onBtnStop);
-function changeColor() {
-  intervalId = setInterval(() => {
-    refs.body.style.backgroundColor =
-      colors[getRandomHexColor(0, colors.length - 1)];
-  }, INTERVAL_DELAY);
-  refs.btnStart.disabled = true;
+btnStart.addEventListener('click', onStart);
+btnStop.addEventListener('click', onStop);
+
+btnStop.toggleAttribute('disabled');
+
+function onStart() {
+  timerId = setInterval(getBgColor, 1000);
 }
 
-function onBtnStop() {
-  clearInterval(intervalId);
-  refs.btnStart.disabled = false;
+function onStop() {
+  clearInterval(timerId);
+}
+
+function getBgColor() {
+  bodyEl.style.backgroundColor = getRandomHexColor();
 }
