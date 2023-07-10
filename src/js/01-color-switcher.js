@@ -16,10 +16,14 @@ btnStop.toggleAttribute('disabled');
 
 function onStart() {
   timerId = setInterval(getBgColor, 1000);
+  btnStop.removeAttribute('disabled');
+  btnStart.toggleAttribute('disabled');
 }
 
 function onStop() {
   clearInterval(timerId);
+  btnStop.toggleAttribute('disabled');
+  btnStart.removeAttribute('disabled');
 }
 
 function getBgColor() {

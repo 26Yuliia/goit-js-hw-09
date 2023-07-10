@@ -16,21 +16,6 @@ const fieldEl = document.querySelectorAll('.field');
 const valueEl = document.querySelectorAll('.value');
 const labelEl = document.querySelectorAll('.label');
 
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates[0] < options.defaultDate) {
-      Notiflix.Notify.warning('Please choose a date in the future!');
-      return;
-    }
-    startEl.removeAttribute('disabled');
-    selectedDate = selectedDates[0].getTime();
-  },
-};
-
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -65,7 +50,7 @@ startEl.addEventListener(
     Notiflix.Notify.success('The countdown has begun!');
     const timer = setInterval(() => {
       startEl.setAttribute('disabled', '');
-      // addLeadingZero();
+      addLeadingZero();
 
       if (
         daysEl.textContent === '00' &&
@@ -80,5 +65,18 @@ startEl.addEventListener(
   },
   1000
 );
-
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    if (selectedDates[0] < options.defaultDate) {
+      Notiflix.Notify.warning('Please choose a date in the future!');
+      return;
+    }
+    startEl.removeAttribute('disabled');
+    selectedDate = selectedDates[0].getTime();
+  },
+};
 flatpickr('#datetime-picker', { ...options });
